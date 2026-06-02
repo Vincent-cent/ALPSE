@@ -1,6 +1,5 @@
 //
 //  ReportFormView.swift
-//  shannonfinaltestSEfix
 //
 
 import SwiftUI
@@ -38,7 +37,6 @@ struct ReportFormView: View {
 
                 ScrollView {
                     VStack(spacing: 24) {
-                        // Info header
                         HStack(spacing: 12) {
                             Image(systemName: "info.circle.fill")
                                 .foregroundColor(.blue)
@@ -52,7 +50,6 @@ struct ReportFormView: View {
                         .background(Color.blue.opacity(0.08))
                         .cornerRadius(12)
 
-                        // Kategori
                         VStack(alignment: .leading, spacing: 12) {
                             Text("Jenis Masalah")
                                 .font(.subheadline)
@@ -79,7 +76,6 @@ struct ReportFormView: View {
                             }
                         }
 
-                        // Lokasi
                         VStack(alignment: .leading, spacing: 12) {
                             HStack {
                                 Text("Lokasi Kejadian")
@@ -105,7 +101,6 @@ struct ReportFormView: View {
                             )
                         }
 
-                        // Deskripsi
                         VStack(alignment: .leading, spacing: 12) {
                             HStack {
                                 Text("Deskripsi Masalah")
@@ -129,7 +124,6 @@ struct ReportFormView: View {
                                 .foregroundColor(.gray)
                         }
 
-                        // Foto
                         VStack(alignment: .leading, spacing: 12) {
                             Text("Foto Bukti")
                                 .font(.subheadline)
@@ -180,7 +174,6 @@ struct ReportFormView: View {
                             .buttonStyle(PlainButtonStyle())
                         }
 
-                        // Urgent toggle
                         HStack {
                             VStack(alignment: .leading, spacing: 4) {
                                 Text("Prioritas Darurat")
@@ -198,7 +191,6 @@ struct ReportFormView: View {
                         .background(isUrgent ? Color.red.opacity(0.1) : Color(.systemBackground))
                         .cornerRadius(12)
 
-                        // Tombol kirim
                         Button(action: submitReport) {
                             HStack(spacing: 12) {
                                 if reportController.isLoading {
@@ -277,7 +269,6 @@ struct ReportFormView: View {
     }
 }
 
-// MARK: - ImagePickerView
 struct ImagePickerView: UIViewControllerRepresentable {
     @Binding var image: UIImage?
     @Environment(\.dismiss) var dismiss

@@ -1,7 +1,5 @@
 //
 //  ProfileView.swift
-//  shannonfinaltestSEfix
-//  Dipakai oleh semua role (resident, admin, technician, community_leader)
 //
 
 import SwiftUI
@@ -17,7 +15,6 @@ struct ProfileView: View {
                 VStack(spacing: 24) {
                     ProfileHeader(user: authController.currentUser)
 
-                    // Stats hanya untuk resident
                     if authController.currentUser?.role == "resident" {
                         let uid = authController.currentUser?.id ?? ""
                         let myReports = reportController.reports(forUser: uid)
@@ -29,9 +26,7 @@ struct ProfileView: View {
                         .padding(.horizontal)
                     }
 
-                    // Menu items
                     VStack(spacing: 12) {
-                        // Khusus Admin: shortcut ke Buat Akun Pegawai
                         if authController.currentUser?.role == "admin" {
                             NavigationLink(destination: CreateEmployeeContent().environmentObject(authController)) {
                                 HStack(spacing: 15) {
@@ -68,7 +63,6 @@ struct ProfileView: View {
                     }
                     .padding(.horizontal)
 
-                    // Logout
                     Button(action: { showLogoutAlert = true }) {
                         HStack {
                             Image(systemName: "arrow.right.square").font(.headline)
@@ -105,7 +99,6 @@ struct ProfileView: View {
     }
 }
 
-// MARK: - ProfileHeader
 struct ProfileHeader: View {
     let user: UserModel?
 
@@ -176,7 +169,6 @@ struct ProfileHeader: View {
     }
 }
 
-// MARK: - ProfileMenuItem
 struct ProfileMenuItem: View {
     let icon: String
     let title: String

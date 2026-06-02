@@ -1,12 +1,10 @@
 //
 //  ReportModel.swift
-//  shannonfinaltestSEfix
 //
 
 import Foundation
 import SwiftUI
 
-// MARK: - Report Model
 struct ReportModel: Identifiable {
     let id = UUID()
     let reportId: String
@@ -15,14 +13,14 @@ struct ReportModel: Identifiable {
     let location: String
     let description: String
     let imageData: Data?
-    let proofImageData: Data?        // foto bukti dari teknisi
+    let proofImageData: Data?
     let status: String
     let date: Date
     let isUrgent: Bool
-    let submittedByUserId: String    // user yang submit laporan
-    let assignedTechnicianId: String // teknisi yang di-assign
+    let submittedByUserId: String
+    let assignedTechnicianId: String
     let assignedTechnicianName: String
-    let needsAdminReview: Bool      // true jika Community Leader menolak & mengembalikan ke admin
+    let needsAdminReview: Bool
 
     var image: UIImage? {
         guard let imageData = imageData else { return nil }
@@ -92,37 +90,6 @@ struct ReportModel: Identifiable {
     ]
 }
 
-// MARK: - User Model
-struct UserModel {
-    let id: String
-    let name: String
-    let email: String
-    let role: String
-    let avatarColor: Color
-
-    var roleDisplayName: String {
-        switch role {
-        case "resident":         return "Warga"
-        case "community_leader": return "Ketua RT/RW"
-        case "admin":            return "Admin"
-        case "technician":       return "Teknisi"
-        default:                 return "Warga"
-        }
-    }
-
-    init(id: String, name: String, email: String, role: String, avatarColor: Color? = nil) {
-        self.id = id
-        self.name = name
-        self.email = email
-        self.role = role
-        self.avatarColor = avatarColor ?? {
-            let colors: [Color] = [.blue, .green, .orange, .purple, .pink]
-            return colors[abs(name.hashValue) % colors.count]
-        }()
-    }
-}
-
-// MARK: - Category Model
 struct ReportCategory {
     let name: String
     let icon: String

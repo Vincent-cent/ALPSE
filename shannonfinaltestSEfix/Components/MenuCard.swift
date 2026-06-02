@@ -2,7 +2,6 @@
 //  MenuCard.swift
 //  shannonfinaltestSEfix
 //
-//  Component card generik untuk menu navigasi
 //
 
 import SwiftUI

@@ -6,6 +6,7 @@
 import Foundation
 import SwiftUI
 import FirebaseFirestore
+import Combine
 
 class ReportController: ObservableObject {
     @Published var reports: [ReportModel] = []
@@ -17,7 +18,6 @@ class ReportController: ObservableObject {
         listenToAllReports()
     }
 
-    // MARK: - Listen realtime
     func listenToAllReports() {
         db.collection("reports")
             .order(by: "date", descending: true)
@@ -73,7 +73,6 @@ class ReportController: ObservableObject {
         )
     }
 
-    // MARK: - Resident: submit laporan
     func addReport(
         title: String,
         category: String,
@@ -116,7 +115,6 @@ class ReportController: ObservableObject {
         }
     }
 
-    // MARK: - Admin: assign technician
     func assignTechnician(
         reportId: String,
         technicianId: String,
@@ -134,7 +132,6 @@ class ReportController: ObservableObject {
         }
     }
 
-    // MARK: - Technician: upload bukti & tandai selesai dikerjakan
     func submitProof(
         reportId: String,
         proofImage: UIImage?,
@@ -155,9 +152,6 @@ class ReportController: ObservableObject {
         }
     }
 
-    // MARK: - Community Leader: verifikasi hasil kerja
-    // Jika approve -> status tetap Completed
-    // Jika reject  -> status kembali ke Pending (notifikasi admin via flag)
     func verifyCompletion(
         reportId: String,
         approved: Bool,
@@ -178,12 +172,10 @@ class ReportController: ObservableObject {
         }
     }
 
-    // MARK: - Generic status update
     func updateReportStatus(reportId: String, newStatus: String) {
         db.collection("reports").document(reportId).updateData(["status": newStatus])
     }
 
-    // MARK: - Computed
     var pendingReports:     [ReportModel] { reports.filter { $0.status == "Pending" } }
     var needsReviewReports: [ReportModel] { reports.filter { $0.needsAdminReview && $0.status == "Pending" } }
     var inProgressReports:  [ReportModel] { reports.filter { $0.status == "In Progress" } }

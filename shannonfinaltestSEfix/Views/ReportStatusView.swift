@@ -1,7 +1,5 @@
 //
 //  ReportStatusView.swift
-//  shannonfinaltestSEfix
-//  Halaman status laporan — dipakai oleh Resident tab
 //
 
 import SwiftUI
@@ -13,7 +11,6 @@ struct ReportStatusView: View {
 
     let statusOptions = ["Semua", "Pending", "In Progress", "Completed"]
 
-    // Hanya tampilkan laporan milik user yang login (resident)
     private var myReports: [ReportModel] {
         guard let uid = authController.currentUser?.id else { return [] }
         return reportController.reports(forUser: uid)
@@ -22,7 +19,6 @@ struct ReportStatusView: View {
     var body: some View {
         NavigationView {
             VStack(spacing: 0) {
-                // Tab filter
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 12) {
                         ForEach(statusOptions, id: \.self) { s in
@@ -82,7 +78,6 @@ struct ReportStatusView: View {
     }
 }
 
-// MARK: - StatusTab
 struct StatusTab: View {
     let title: String
     let isSelected: Bool
@@ -126,7 +121,6 @@ struct StatusTab: View {
     }
 }
 
-// MARK: - StatusCardView
 struct StatusCardView: View {
     let report: ReportModel
 

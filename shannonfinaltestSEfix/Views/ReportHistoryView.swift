@@ -1,12 +1,9 @@
 //
 //  ReportHistoryView.swift
-//  shannonfinaltestSEfix
-//  Digunakan di ReportStatusView dan Admin sebagai semua laporan global
 //
 
 import SwiftUI
 
-// MARK: - ReportHistoryView (semua laporan — dipakai untuk navigasi dari luar)
 struct ReportHistoryView: View {
     @EnvironmentObject var reportController: ReportController
     @State private var searchText     = ""
@@ -94,7 +91,6 @@ struct ReportHistoryView: View {
     }
 }
 
-// MARK: - ReportDetailView
 struct ReportDetailView: View {
     let report: ReportModel
     @Environment(\.dismiss) var dismiss
@@ -169,7 +165,6 @@ struct ReportDetailView: View {
                     }
                 }
 
-                // Timeline
                 VStack(alignment: .leading, spacing: 15) {
                     Text("Status Timeline")
                         .font(.headline)
@@ -208,7 +203,6 @@ struct ReportDetailView: View {
     }
 }
 
-// MARK: - DetailRow
 struct DetailRow: View {
     let icon: String
     let title: String
@@ -238,7 +232,6 @@ struct DetailRow: View {
     }
 }
 
-// MARK: - TimelineItem
 struct TimelineItem: View {
     let status: String
     let isCompleted: Bool

@@ -1,15 +1,9 @@
 //
 //  CommunityLeaderHomeView.swift
 //  shannonfinaltestSEfix
-//  Halaman utama Ketua RT/RW (Community Leader):
-//  - Tab 1: Verifikasi laporan yang sudah selesai dikerjakan teknisi
-//  - Tab 2: Lihat semua laporan di wilayah
-//  - Tab 3: Profil & Logout
-//
 
 import SwiftUI
 
-// MARK: - CommunityLeaderHomeView
 struct CommunityLeaderHomeView: View {
     @EnvironmentObject var authController:   AuthController
     @EnvironmentObject var reportController: ReportController
@@ -33,12 +27,10 @@ struct CommunityLeaderHomeView: View {
     }
 }
 
-// MARK: - CommunityLeaderDashboardView
 struct CommunityLeaderDashboardView: View {
     @EnvironmentObject var reportController: ReportController
     @EnvironmentObject var authController:   AuthController
 
-    // Laporan yang sudah selesai dikerjakan teknisi (status Completed) — perlu diverifikasi
     private var needsVerification: [ReportModel] {
         reportController.completedReports
     }
@@ -47,16 +39,13 @@ struct CommunityLeaderDashboardView: View {
         NavigationView {
             ScrollView {
                 VStack(spacing: 20) {
-                    // Header
                     CLHeader(userName: authController.currentUser?.name ?? "Ketua RT/RW")
 
-                    // Stats
                     HStack(spacing: 12) {
                         StatCard(title: "Perlu Verifikasi", value: "\(needsVerification.count)", icon: "checkmark.seal", color: .purple)
                         StatCard(title: "Total Laporan",    value: "\(reportController.reports.count)", icon: "doc.text.fill", color: .blue)
                     }
 
-                    // Laporan perlu verifikasi
                     VStack(alignment: .leading, spacing: 12) {
                         HStack {
                             Image(systemName: "checkmark.seal.fill").foregroundColor(.purple)
@@ -98,7 +87,6 @@ struct CommunityLeaderDashboardView: View {
     }
 }
 
-// MARK: - CLHeader
 struct CLHeader: View {
     let userName: String
 
@@ -121,7 +109,6 @@ struct CLHeader: View {
     }
 }
 
-// MARK: - CLReportCard
 struct CLReportCard: View {
     let report: ReportModel
 
@@ -158,7 +145,6 @@ struct CLReportCard: View {
     }
 }
 
-// MARK: - VerifyReportView
 struct VerifyReportView: View {
     let report: ReportModel
 
@@ -173,12 +159,10 @@ struct VerifyReportView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
-                // Detail laporan
                 VStack(alignment: .leading, spacing: 10) {
                     Text("Informasi Laporan").font(.headline)
                     CLReportCard(report: report)
 
-                    // Deskripsi
                     VStack(alignment: .leading, spacing: 6) {
                         Text("Deskripsi Masalah").font(.subheadline).fontWeight(.semibold)
                         Text(report.description).font(.body).foregroundColor(.gray)
@@ -190,7 +174,6 @@ struct VerifyReportView: View {
 
                 Divider()
 
-                // Foto bukti dari teknisi
                 VStack(alignment: .leading, spacing: 12) {
                     Text("Foto Bukti dari Teknisi").font(.headline)
                     if let proofImg = report.proofImage {
@@ -212,13 +195,11 @@ struct VerifyReportView: View {
 
                 Divider()
 
-                // Tombol verifikasi
                 VStack(spacing: 14) {
                     Text("Verifikasi Hasil Pekerjaan").font(.headline)
                     Text("Pilih tindakan berdasarkan hasil verifikasi di lapangan:")
                         .font(.caption).foregroundColor(.gray)
 
-                    // Approve
                     Button(action: { showApproveAlert = true }) {
                         HStack {
                             Image(systemName: "checkmark.circle.fill")
@@ -231,7 +212,6 @@ struct VerifyReportView: View {
                         .cornerRadius(12)
                     }
 
-                    // Reject (kembalikan ke pending)
                     Button(action: { showRejectAlert = true }) {
                         HStack {
                             Image(systemName: "arrow.uturn.backward.circle.fill")
@@ -249,21 +229,18 @@ struct VerifyReportView: View {
         }
         .navigationTitle("Verifikasi Laporan")
         .navigationBarTitleDisplayMode(.inline)
-        // Konfirmasi Approve
         .alert("Setujui Pekerjaan?", isPresented: $showApproveAlert) {
             Button("Batal", role: .cancel) { }
             Button("Ya, Setujui") { verify(approved: true) }
         } message: {
             Text("Konfirmasi bahwa pekerjaan pada laporan \(report.reportId) sudah selesai dengan baik.")
         }
-        // Konfirmasi Reject
         .alert("Tolak & Kembalikan?", isPresented: $showRejectAlert) {
             Button("Batal", role: .cancel) { }
             Button("Ya, Tolak", role: .destructive) { verify(approved: false) }
         } message: {
             Text("Laporan akan dikembalikan ke status Pending dan admin akan diberitahu untuk menugaskan ulang.")
         }
-        // Sukses
         .alert("Berhasil!", isPresented: $showSuccessAlert) {
             Button("OK") { dismiss() }
         } message: {
@@ -283,7 +260,6 @@ struct VerifyReportView: View {
     }
 }
 
-// MARK: - AllReportsView (untuk Community Leader lihat semua laporan)
 struct AllReportsView: View {
     @EnvironmentObject var reportController: ReportController
     @State private var selectedFilter = "Semua"

@@ -1,15 +1,11 @@
 //
 //  AdminHomeView.swift
 //  shannonfinaltestSEfix
-//  Halaman utama Admin:
-//  - Tab 1: Dashboard + daftar laporan untuk di-assign ke teknisi
-//  - Tab 2: Buat akun pegawai (Teknisi / Admin / Ketua RT/RW)
-//  - Tab 3: Profil & Logout
 //
 
 import SwiftUI
+import Combine
 
-// MARK: - AdminHomeView
 struct AdminHomeView: View {
     @EnvironmentObject var authController:   AuthController
     @EnvironmentObject var reportController: ReportController
@@ -34,7 +30,6 @@ struct AdminHomeView: View {
     }
 }
 
-// MARK: - AdminDashboardView
 struct AdminDashboardView: View {
     @EnvironmentObject var authController:   AuthController
     @EnvironmentObject var reportController: ReportController
@@ -43,19 +38,14 @@ struct AdminDashboardView: View {
         NavigationView {
             ScrollView {
                 VStack(spacing: 20) {
-                    // Header
                     AdminHeader(userName: authController.currentUser?.name ?? "Admin")
 
-                    // Stats keseluruhan
                     AdminStatsRow(reportController: reportController)
 
-                    // Laporan yang belum di-assign (Pending)
                     AdminPendingSection()
 
-                    // Laporan yang dikembalikan Community Leader
                     AdminNeedsReviewSection()
 
-                    // Laporan yang sedang dikerjakan
                     AdminInProgressSection()
                 }
                 .padding(.horizontal, 16)
@@ -68,7 +58,6 @@ struct AdminDashboardView: View {
     }
 }
 
-// MARK: - AdminHeader
 struct AdminHeader: View {
     let userName: String
 
@@ -91,7 +80,6 @@ struct AdminHeader: View {
     }
 }
 
-// MARK: - AdminStatsRow
 struct AdminStatsRow: View {
     @ObservedObject var reportController: ReportController
 
@@ -128,7 +116,6 @@ struct AdminStatCard: View {
     }
 }
 
-// MARK: - AdminPendingSection
 struct AdminPendingSection: View {
     @EnvironmentObject var reportController: ReportController
 
@@ -162,7 +149,6 @@ struct AdminPendingSection: View {
     }
 }
 
-// MARK: - AdminNeedsReviewSection
 struct AdminNeedsReviewSection: View {
     @EnvironmentObject var reportController: ReportController
 
@@ -217,7 +203,6 @@ struct AdminNeedsReviewSection: View {
     }
 }
 
-// MARK: - AdminInProgressSection
 struct AdminInProgressSection: View {
     @EnvironmentObject var reportController: ReportController
 
@@ -247,7 +232,6 @@ struct AdminInProgressSection: View {
     }
 }
 
-// MARK: - AdminReportCard
 struct AdminReportCard: View {
     let report: ReportModel
     let showAssignButton: Bool
@@ -288,7 +272,6 @@ struct AdminReportCard: View {
     }
 }
 
-// MARK: - EmptyAdminCard
 struct EmptyAdminCard: View {
     let message: String
 
@@ -304,7 +287,6 @@ struct EmptyAdminCard: View {
     }
 }
 
-// MARK: - AssignTechnicianView
 struct AssignTechnicianView: View {
     let report: ReportModel
 
@@ -321,7 +303,6 @@ struct AssignTechnicianView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
-                // Detail laporan
                 VStack(alignment: .leading, spacing: 12) {
                     Text("Detail Laporan").font(.headline)
                     AdminReportCard(report: report, showAssignButton: false)
@@ -329,7 +310,6 @@ struct AssignTechnicianView: View {
 
                 Divider()
 
-                // Pilih teknisi
                 VStack(alignment: .leading, spacing: 12) {
                     Text("Pilih Teknisi").font(.headline)
 
@@ -344,7 +324,6 @@ struct AssignTechnicianView: View {
                         .background(Color(.systemGray6))
                         .cornerRadius(12)
                     } else {
-                        // Dropdown picker
                         VStack(alignment: .leading, spacing: 8) {
                             Text("Pilih nama teknisi yang tersedia:")
                                 .font(.caption).foregroundColor(.gray)
@@ -382,7 +361,6 @@ struct AssignTechnicianView: View {
                                 )
                             }
 
-                            // Show selected technician detail card
                             if !selectedTechnicianId.isEmpty,
                                let selectedTech = authController.technicians.first(where: { $0.id == selectedTechnicianId }) {
                                 HStack(spacing: 14) {
@@ -407,7 +385,6 @@ struct AssignTechnicianView: View {
                     }
                 }
 
-                // Tombol Save
                 Button(action: assignTechnician) {
                     HStack {
                         Image(systemName: "checkmark.circle.fill")
@@ -450,10 +427,6 @@ struct AssignTechnicianView: View {
     }
 }
 
-
-
-// MARK: - CreateEmployeeView
-// Wrapper dengan NavigationView — dipakai di tab Admin
 struct CreateEmployeeView: View {
     var body: some View {
         NavigationView {
@@ -462,8 +435,6 @@ struct CreateEmployeeView: View {
     }
 }
 
-// MARK: - CreateEmployeeContent
-// Content tanpa NavigationView — dipakai sebagai NavigationLink destination dari ProfileView
 struct CreateEmployeeContent: View {
     @EnvironmentObject var authController: AuthController
 
@@ -501,7 +472,6 @@ struct CreateEmployeeContent: View {
                         .padding(.top, 20)
                         .padding(.horizontal, 24)
 
-                        // Form
                         VStack(spacing: 18) {
                             FormField(label: "Nama Lengkap", icon: "person", placeholder: "Nama pegawai", text: $name)
                             FormField(label: "Email", icon: "envelope", placeholder: "email@example.com", text: $email, isEmail: true)
@@ -510,7 +480,6 @@ struct CreateEmployeeContent: View {
                         }
                         .padding(.horizontal, 24)
 
-                        // Role Selection
                         VStack(alignment: .leading, spacing: 12) {
                             Text("Pilih Role Pegawai")
                                 .font(.caption).fontWeight(.medium).foregroundColor(.gray)
@@ -530,7 +499,6 @@ struct CreateEmployeeContent: View {
                             }
                         }
 
-                        // Submit button
                         Button(action: createAccount) {
                             HStack {
                                 if authController.isLoading {
@@ -600,7 +568,6 @@ struct CreateEmployeeContent: View {
     }
 }
 
-// MARK: - FormField helper
 struct FormField: View {
     let label: String
     let icon: String
@@ -628,7 +595,6 @@ struct FormField: View {
     }
 }
 
-// MARK: - EmployeeRoleCard
 struct EmployeeRoleCard: View {
     let roleName: String
     let roleIcon: String

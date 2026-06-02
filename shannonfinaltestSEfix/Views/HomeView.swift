@@ -6,7 +6,6 @@
 
 import SwiftUI
 
-// MARK: - HomeView (Resident)
 struct HomeView: View {
     @EnvironmentObject var authController:   AuthController
     @EnvironmentObject var reportController: ReportController
@@ -37,7 +36,6 @@ struct HomeView: View {
     }
 }
 
-// MARK: - HomeMainView
 struct HomeMainView: View {
     @EnvironmentObject var authController:   AuthController
     @EnvironmentObject var reportController: ReportController
@@ -54,14 +52,12 @@ struct HomeMainView: View {
                 VStack(spacing: 24) {
                     WelcomeHeader(userName: authController.currentUser?.name ?? "Pengguna")
 
-                    // Stats (hanya laporan milik user ini)
                     ResidentStatsRow(
                         total:      myReports.count,
                         inProgress: myReports.filter { $0.status == "In Progress" }.count,
                         completed:  myReports.filter { $0.status == "Completed" }.count
                     )
 
-                    // Quick action
                     Button(action: { showReportForm = true }) {
                         HStack {
                             Image(systemName: "plus.circle.fill")
@@ -76,7 +72,6 @@ struct HomeMainView: View {
                         .cornerRadius(14)
                     }
 
-                    // Recent reports
                     RecentReportsSection(reports: Array(myReports.prefix(3)))
 
                     InfoCard()
@@ -95,7 +90,6 @@ struct HomeMainView: View {
     }
 }
 
-// MARK: - WelcomeHeader
 struct WelcomeHeader: View {
     let userName: String
 
@@ -126,7 +120,6 @@ struct WelcomeHeader: View {
     }
 }
 
-// MARK: - ResidentStatsRow
 struct ResidentStatsRow: View {
     let total: Int
     let inProgress: Int
@@ -141,7 +134,6 @@ struct ResidentStatsRow: View {
     }
 }
 
-// MARK: - StatCard
 struct StatCard: View {
     let title: String
     let value: String
@@ -165,7 +157,6 @@ struct StatCard: View {
     }
 }
 
-// MARK: - RecentReportsSection
 struct RecentReportsSection: View {
     let reports: [ReportModel]
 
@@ -187,7 +178,6 @@ struct RecentReportsSection: View {
     }
 }
 
-// MARK: - EmptyReportsCard
 struct EmptyReportsCard: View {
     var body: some View {
         VStack(spacing: 16) {
@@ -204,7 +194,6 @@ struct EmptyReportsCard: View {
     }
 }
 
-// MARK: - InfoCard
 struct InfoCard: View {
     var body: some View {
         HStack(spacing: 15) {
@@ -226,7 +215,6 @@ struct InfoCard: View {
     }
 }
 
-// MARK: - ReportCard (shared)
 struct ReportCard: View {
     let report: ReportModel
 
@@ -257,7 +245,6 @@ struct ReportCard: View {
     }
 }
 
-// MARK: - StatusBadge (shared)
 struct StatusBadge: View {
     let status: String
 
@@ -293,7 +280,6 @@ struct StatusBadge: View {
     }
 }
 
-// MARK: - PrimaryButton (shared component)
 struct PrimaryButton: View {
     let title: String
     let icon: String
@@ -320,7 +306,6 @@ struct PrimaryButton: View {
     }
 }
 
-// MARK: - CustomTextField (shared component)
 struct CustomTextField: View {
     let title: String
     let icon: String
@@ -348,7 +333,6 @@ struct CustomTextField: View {
     }
 }
 
-// MARK: - ResidentReportHistoryView
 struct ResidentReportHistoryView: View {
     @EnvironmentObject var authController:   AuthController
     @EnvironmentObject var reportController: ReportController
@@ -394,7 +378,6 @@ struct ResidentReportHistoryView: View {
                 .padding(.horizontal)
                 .padding(.top, 8)
 
-                // Filter chips
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 10) {
                         ForEach(filters, id: \.self) { f in
@@ -434,7 +417,6 @@ struct ResidentReportHistoryView: View {
     }
 }
 
-// MARK: - FilterChip (shared)
 struct FilterChip: View {
     let title: String
     let isSelected: Bool

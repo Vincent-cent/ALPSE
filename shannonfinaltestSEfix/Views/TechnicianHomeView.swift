@@ -1,14 +1,9 @@
 //
 //  TechnicianHomeView.swift
-//  shannonfinaltestSEfix
-//  Halaman utama Teknisi:
-//  - Tab 1: Daftar laporan yang di-assign ke teknisi ini + form upload bukti
-//  - Tab 2: Profil & Logout
 //
 
 import SwiftUI
 
-// MARK: - TechnicianHomeView
 struct TechnicianHomeView: View {
     @EnvironmentObject var authController:   AuthController
     @EnvironmentObject var reportController: ReportController
@@ -28,7 +23,6 @@ struct TechnicianHomeView: View {
     }
 }
 
-// MARK: - TechnicianDashboardView
 struct TechnicianDashboardView: View {
     @EnvironmentObject var authController:   AuthController
     @EnvironmentObject var reportController: ReportController
@@ -50,16 +44,13 @@ struct TechnicianDashboardView: View {
         NavigationView {
             ScrollView {
                 VStack(spacing: 20) {
-                    // Header
                     TechnicianHeader(userName: authController.currentUser?.name ?? "Teknisi")
 
-                    // Stats
                     HStack(spacing: 12) {
                         StatCard(title: "Aktif",   value: "\(activeReports.count)", icon: "wrench.fill",          color: .green)
                         StatCard(title: "Selesai", value: "\(doneReports.count)",   icon: "checkmark.circle.fill", color: .gray)
                     }
 
-                    // Laporan aktif
                     VStack(alignment: .leading, spacing: 12) {
                         HStack {
                             Image(systemName: "wrench.fill").foregroundColor(.green)
@@ -83,7 +74,6 @@ struct TechnicianDashboardView: View {
                     .background(Color(.systemBackground))
                     .cornerRadius(16)
 
-                    // Laporan selesai
                     if !doneReports.isEmpty {
                         VStack(alignment: .leading, spacing: 12) {
                             HStack {
@@ -113,7 +103,6 @@ struct TechnicianDashboardView: View {
     }
 }
 
-// MARK: - TechnicianHeader
 struct TechnicianHeader: View {
     let userName: String
 
@@ -136,7 +125,6 @@ struct TechnicianHeader: View {
     }
 }
 
-// MARK: - TechnicianReportCard
 struct TechnicianReportCard: View {
     let report: ReportModel
 
@@ -170,7 +158,6 @@ struct TechnicianReportCard: View {
     }
 }
 
-// MARK: - EmptyTechCard
 struct EmptyTechCard: View {
     let message: String
 
@@ -186,7 +173,6 @@ struct EmptyTechCard: View {
     }
 }
 
-// MARK: - TechnicianSubmitProofView
 struct TechnicianSubmitProofView: View {
     let report: ReportModel
 
@@ -202,12 +188,10 @@ struct TechnicianSubmitProofView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
-                // Detail laporan
                 VStack(alignment: .leading, spacing: 12) {
                     Text("Detail Laporan").font(.headline)
                     TechnicianReportCard(report: report)
 
-                    // Deskripsi
                     VStack(alignment: .leading, spacing: 6) {
                         Text("Deskripsi Masalah").font(.subheadline).fontWeight(.semibold)
                         Text(report.description).font(.body).foregroundColor(.gray)
@@ -216,7 +200,6 @@ struct TechnicianSubmitProofView: View {
                     .background(Color(.systemGray6))
                     .cornerRadius(10)
 
-                    // Foto laporan (jika ada)
                     if let img = report.image {
                         VStack(alignment: .leading, spacing: 6) {
                             Text("Foto Laporan dari Warga").font(.subheadline).fontWeight(.semibold)
@@ -229,7 +212,6 @@ struct TechnicianSubmitProofView: View {
 
                 Divider()
 
-                // Upload bukti
                 VStack(alignment: .leading, spacing: 12) {
                     Text("Upload Foto Bukti Pengerjaan").font(.headline)
                     Text("Ambil atau pilih foto setelah pekerjaan selesai sebagai bukti.")
@@ -268,7 +250,6 @@ struct TechnicianSubmitProofView: View {
                     .buttonStyle(PlainButtonStyle())
                 }
 
-                // Tombol selesai
                 Button(action: submitProof) {
                     HStack {
                         if reportController.isLoading {

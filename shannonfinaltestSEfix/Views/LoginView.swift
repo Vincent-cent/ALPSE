@@ -1,8 +1,6 @@
 //
 //  LoginView.swift
-//  shannonfinaltestSEfix
 //
-//  Halaman login
 //
 
 import SwiftUI
