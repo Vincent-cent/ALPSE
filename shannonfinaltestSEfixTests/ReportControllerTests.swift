@@ -16,6 +16,7 @@ final class ReportControllerTests: XCTestCase {
         let controller = ReportController(shouldListen: false)
 
         let expectedData = Data("gambar".utf8)
+        let expectedProofData = Data("bukti".utf8)
         let date = Date(timeIntervalSince1970: 1_700_000_000)
         let payload: [String: Any] = [
             "reportId": "R-001",
@@ -24,6 +25,9 @@ final class ReportControllerTests: XCTestCase {
             "location": "Blok A",
             "description": "Lampu koridor mati",
             "image_base64": expectedData.base64EncodedString(),
+            "proof_base64": expectedProofData.base64EncodedString(),
+            "image_url": " https://example.com/report.jpg ",
+            "proof_url": "https://example.com/proof.jpg",
             "date": Timestamp(date: date),
             "submittedByUserId": "U-1",
             "assignedTechnicianId": "T-1",
@@ -38,7 +42,9 @@ final class ReportControllerTests: XCTestCase {
         XCTAssertEqual(report?.isUrgent, false)
         XCTAssertEqual(report?.needsAdminReview, false)
         XCTAssertEqual(report?.imageData, expectedData)
-        XCTAssertNil(report?.proofImageData)
+        XCTAssertEqual(report?.proofImageData, expectedProofData)
+        XCTAssertEqual(report?.imageUrl, "https://example.com/report.jpg")
+        XCTAssertEqual(report?.proofImageUrl, "https://example.com/proof.jpg")
         XCTAssertEqual(report?.date, date)
     }
 

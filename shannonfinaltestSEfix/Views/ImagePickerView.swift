@@ -35,7 +35,7 @@ struct ImagePickerView: UIViewControllerRepresentable {
             didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]
         ) {
             if let image = info[.originalImage] as? UIImage {
-                parent.image = image
+                parent.image = image.resizedToMaxDimension(1280)
             }
             parent.dismiss()
         }

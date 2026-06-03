@@ -12,8 +12,8 @@ struct ReportModel: Identifiable {
     let category: String
     let location: String
     let description: String
-    let imageData: Data? = nil
-    let proofImageData: Data? = nil
+    let imageData: Data?
+    let proofImageData: Data?
     let status: String
     let date: Date
     let isUrgent: Bool
@@ -21,8 +21,44 @@ struct ReportModel: Identifiable {
     let assignedTechnicianId: String
     let assignedTechnicianName: String
     let needsAdminReview: Bool
-    let imageUrl: String? = nil
-    let proofImageUrl: String? = nil
+    let imageUrl: String?
+    let proofImageUrl: String?
+
+    init(
+        reportId: String,
+        title: String,
+        category: String,
+        location: String,
+        description: String,
+        imageData: Data? = nil,
+        proofImageData: Data? = nil,
+        status: String,
+        date: Date,
+        isUrgent: Bool,
+        submittedByUserId: String,
+        assignedTechnicianId: String,
+        assignedTechnicianName: String,
+        needsAdminReview: Bool,
+        imageUrl: String? = nil,
+        proofImageUrl: String? = nil
+    ) {
+        self.reportId = reportId
+        self.title = title
+        self.category = category
+        self.location = location
+        self.description = description
+        self.imageData = imageData
+        self.proofImageData = proofImageData
+        self.status = status
+        self.date = date
+        self.isUrgent = isUrgent
+        self.submittedByUserId = submittedByUserId
+        self.assignedTechnicianId = assignedTechnicianId
+        self.assignedTechnicianName = assignedTechnicianName
+        self.needsAdminReview = needsAdminReview
+        self.imageUrl = imageUrl
+        self.proofImageUrl = proofImageUrl
+    }
 
     var image: UIImage? {
         guard let imageData = imageData else { return nil }

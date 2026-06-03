@@ -54,12 +54,6 @@ struct ProfileView: View {
                             color: .green
                         ) { }
 
-                        ProfileMenuItem(
-                            icon: "envelope.fill",
-                            title: "Bantuan & Dukungan",
-                            subtitle: "Hubungi tim kami",
-                            color: .purple
-                        ) { }
                     }
                     .padding(.horizontal)
 
