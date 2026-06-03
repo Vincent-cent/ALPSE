@@ -18,8 +18,8 @@ class AuthController: ObservableObject {
 
     private let db = Firestore.firestore()
 
-    init() {
-        if let firebaseUser = Auth.auth().currentUser {
+    init(shouldFetchCurrentUser: Bool = true) {
+        if shouldFetchCurrentUser, let firebaseUser = Auth.auth().currentUser {
             fetchUserData(uid: firebaseUser.uid)
         }
     }
@@ -190,7 +190,7 @@ class AuthController: ObservableObject {
         }
     }
 
-    private func friendlyError(_ error: Error) -> String {
+    func friendlyError(_ error: Error) -> String {
         let code = (error as NSError).code
         switch code {
         case 17007: return "Email sudah terdaftar. Gunakan email lain."
