@@ -12,8 +12,8 @@ struct ReportModel: Identifiable {
     let category: String
     let location: String
     let description: String
-    let imageData: Data?
-    let proofImageData: Data?
+    let imageData: Data? = nil
+    let proofImageData: Data? = nil
     let status: String
     let date: Date
     let isUrgent: Bool
@@ -21,6 +21,8 @@ struct ReportModel: Identifiable {
     let assignedTechnicianId: String
     let assignedTechnicianName: String
     let needsAdminReview: Bool
+    let imageUrl: String? = nil
+    let proofImageUrl: String? = nil
 
     var image: UIImage? {
         guard let imageData = imageData else { return nil }
@@ -61,8 +63,6 @@ struct ReportModel: Identifiable {
             category: "Pipa Bocor",
             location: "Jl. Mawar No.5, RT02/RW03",
             description: "Air mengalir deras sejak 2 hari.",
-            imageData: nil,
-            proofImageData: nil,
             status: "Pending",
             date: Date().addingTimeInterval(-86400 * 3),
             isUrgent: true,
@@ -77,8 +77,6 @@ struct ReportModel: Identifiable {
             category: "Saluran Mampet",
             location: "Gg. Melati, belakang masjid",
             description: "Air tidak mengalir, bau tidak sedap.",
-            imageData: nil,
-            proofImageData: nil,
             status: "In Progress",
             date: Date().addingTimeInterval(-86400 * 2),
             isUrgent: false,

@@ -69,6 +69,25 @@ struct ReportDetailView: View {
                             .scaledToFit()
                             .cornerRadius(12)
                     }
+                } else if let urlString = report.imageUrl, let url = URL(string: urlString) {
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text("Foto Laporan").font(.headline)
+                        AsyncImage(url: url) { phase in
+                            switch phase {
+                            case .empty:
+                                ProgressView()
+                                    .frame(maxWidth: .infinity, minHeight: 180)
+                            case .success(let image):
+                                image.resizable().scaledToFit().cornerRadius(12)
+                            case .failure:
+                                Image(systemName: "photo")
+                                    .foregroundColor(.gray)
+                                    .frame(maxWidth: .infinity, minHeight: 180)
+                            @unknown default:
+                                EmptyView()
+                            }
+                        }
+                    }
                 }
 
                 if let proofImg = report.proofImage {
@@ -78,6 +97,25 @@ struct ReportDetailView: View {
                             .resizable()
                             .scaledToFit()
                             .cornerRadius(12)
+                    }
+                } else if let urlString = report.proofImageUrl, let url = URL(string: urlString) {
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text("Foto Bukti Teknisi").font(.headline)
+                        AsyncImage(url: url) { phase in
+                            switch phase {
+                            case .empty:
+                                ProgressView()
+                                    .frame(maxWidth: .infinity, minHeight: 180)
+                            case .success(let image):
+                                image.resizable().scaledToFit().cornerRadius(12)
+                            case .failure:
+                                Image(systemName: "photo")
+                                    .foregroundColor(.gray)
+                                    .frame(maxWidth: .infinity, minHeight: 180)
+                            @unknown default:
+                                EmptyView()
+                            }
+                        }
                     }
                 }
 

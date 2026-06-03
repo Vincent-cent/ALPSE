@@ -41,6 +41,25 @@ struct TechnicianSubmitProofView: View {
                                 .resizable().scaledToFit()
                                 .cornerRadius(10)
                         }
+                    } else if let urlString = report.imageUrl, let url = URL(string: urlString) {
+                        VStack(alignment: .leading, spacing: 6) {
+                            Text("Foto Laporan dari Warga").font(.subheadline).fontWeight(.semibold)
+                            AsyncImage(url: url) { phase in
+                                switch phase {
+                                case .empty:
+                                    ProgressView()
+                                        .frame(maxWidth: .infinity, minHeight: 180)
+                                case .success(let image):
+                                    image.resizable().scaledToFit().cornerRadius(10)
+                                case .failure:
+                                    Image(systemName: "photo")
+                                        .foregroundColor(.gray)
+                                        .frame(maxWidth: .infinity, minHeight: 180)
+                                @unknown default:
+                                    EmptyView()
+                                }
+                            }
+                        }
                     }
                 }
 

@@ -5,13 +5,30 @@
 import Foundation
 import SwiftUI
 import FirebaseFirestore
+import FirebaseStorage
 import Combine
+import UIKit
+
+extension UIImage {
+    func resizedToMaxDimension(_ maxDimension: CGFloat) -> UIImage {
+        let aspectRatio = size.width / size.height
+        let newWidth = min(size.width, maxDimension)
+        let newHeight = newWidth / aspectRatio
+        
+        let newSize = CGSize(width: newWidth, height: newHeight)
+        let renderer = UIGraphicsImageRenderer(size: newSize)
+        return renderer.image { _ in
+            self.draw(in: CGRect(origin: .zero, size: newSize))
+        }
+    }
+}
 
 class ReportController: ObservableObject {
     @Published var reports: [ReportModel] = []
     @Published var isLoading = false
     
-    private let db = Firestore.firestore()
+    private lazy var db = Firestore.firestore()
+    private lazy var storage = Storage.storage()
     
     init(shouldListen: Bool = true) {
         if shouldListen {
@@ -42,6 +59,8 @@ class ReportController: ObservableObject {
         let assignedId   = data["assignedTechnicianId"]    as? String ?? ""
         let assignedName = data["assignedTechnicianName"]  as? String ?? ""
         let needsAdminReview = data["needsAdminReview"] as? Bool ?? false
+        let imageUrl = (data["image_url"] as? String)?.trimmingCharacters(in: .whitespacesAndNewlines)
+        let proofUrl = (data["proof_url"] as? String)?.trimmingCharacters(in: .whitespacesAndNewlines)
         
         let ts   = data["date"] as? Timestamp ?? Timestamp(date: Date())
         let date = ts.dateValue()
@@ -62,8 +81,6 @@ class ReportController: ObservableObject {
             category: category,
             location: location,
             description: description,
-            imageData: imageData,
-            proofImageData: proofData,
             status: status,
             date: date,
             isUrgent: isUrgent,
@@ -74,13 +91,11 @@ class ReportController: ObservableObject {
         )
     }
     
-    private func makeBase64Image(_ image: UIImage?, maxDimension: CGFloat = 800, compressionQuality: CGFloat = 0.3) -> String {
-        guard let image = image else { return "" }
+    private func makeJpegData(_ image: UIImage?, maxDimension: CGFloat = 640, compressionQuality: CGFloat = 0.25) -> Data? {
+        guard let image = image else { return nil }
         let resized = image.resizedToMaxDimension(maxDimension)
-        guard let data = resized.jpegData(compressionQuality: compressionQuality) else { return "" }
-        return data.base64EncodedString()
+        return resized.jpegData(compressionQuality: compressionQuality)
     }
-    
     
     func addReport(
         title: String,
@@ -95,15 +110,15 @@ class ReportController: ObservableObject {
         isLoading = true
         
         DispatchQueue.global(qos: .userInitiated).async {
-            let imageString = self.makeBase64Image(image)
+            let imageData = self.makeJpegData(image)
             let newId = "AQ-\(Int.random(in: 1000...9999))"
-            let payload: [String: Any] = [
+            var payload: [String: Any] = [
                 "reportId":               newId,
                 "title":                  title,
                 "category":               category,
                 "location":               location,
                 "description":            description.isEmpty ? "Tidak ada deskripsi" : description,
-                "image_base64":           imageString,
+                "image_base64":           "",
                 "proof_base64":           "",
                 "status":                 "Pending",
                 "date":                   Timestamp(date: Date()),
@@ -113,10 +128,42 @@ class ReportController: ObservableObject {
                 "assignedTechnicianName": ""
             ]
             
-            self.db.collection("reports").document(newId).setData(payload) { error in
-                DispatchQueue.main.async {
-                    self.isLoading = false
-                    completion(error == nil)
+            guard let imageData = imageData else {
+                payload["image_url"] = ""
+                self.db.collection("reports").document(newId).setData(payload) { error in
+                    DispatchQueue.main.async {
+                        self.isLoading = false
+                        completion(error == nil)
+                    }
+                }
+                return
+            }
+            
+            let imageRef = self.storage.reference().child("reports/\(newId)/report.jpg")
+            imageRef.putData(imageData, metadata: nil) { [weak self] _, error in
+                guard let self = self else { return }
+                guard error == nil else {
+                    DispatchQueue.main.async {
+                        self.isLoading = false
+                        completion(false)
+                    }
+                    return
+                }
+                imageRef.downloadURL { url, urlError in
+                    guard urlError == nil else {
+                        DispatchQueue.main.async {
+                            self.isLoading = false
+                            completion(false)
+                        }
+                        return
+                    }
+                    payload["image_url"] = url?.absoluteString ?? ""
+                    self.db.collection("reports").document(newId).setData(payload) { err in
+                        DispatchQueue.main.async {
+                            self.isLoading = false
+                            completion(err == nil)
+                        }
+                    }
                 }
             }
         }
@@ -147,15 +194,19 @@ class ReportController: ObservableObject {
         isLoading = true
         
         DispatchQueue.global(qos: .userInitiated).async {
-            let proofBase64 = self.makeBase64Image(proofImage)
+            guard let proofData = self.makeJpegData(proofImage) else {
+                DispatchQueue.main.async {
+                    self.isLoading = false
+                    completion(false)
+                }
+                return
+            }
             
-            
-            let proofDoc = self.db
-                .collection("reports").document(reportId)
-                .collection("proof").document(reportId)
-            
-            proofDoc.setData(["proof_base64": proofBase64]) { [weak self] error in
-                guard let self = self else { return }
+            let proofRef = self.storage.reference().child("reports/\(reportId)/proof.jpg")
+            imageRef.putData(imageData, metadata: metadata) { [weak self] _, error in
+                if let error = error {
+                    print("❌ Upload Error: \(error.localizedDescription)")
+                }
                 guard error == nil else {
                     DispatchQueue.main.async {
                         self.isLoading = false
@@ -163,18 +214,29 @@ class ReportController: ObservableObject {
                     }
                     return
                 }
-                self.db.collection("reports").document(reportId).updateData([
-                    "status":       "Completed",
-                    "proof_base64": ""
-                ]) { err in
-                    DispatchQueue.main.async {
-                        self.isLoading = false
-                        completion(err == nil)
+                proofRef.downloadURL { url, urlError in
+                    guard urlError == nil else {
+                        DispatchQueue.main.async {
+                            self.isLoading = false
+                            completion(false)
+                        }
+                        return
+                    }
+                    self.db.collection("reports").document(reportId).updateData([
+                        "status":       "Completed",
+                        "proof_base64": "",
+                        "proof_url":    url?.absoluteString ?? ""
+                    ]) { err in
+                        DispatchQueue.main.async {
+                            self.isLoading = false
+                            completion(err == nil)
+                        }
                     }
                 }
             }
         }
     }
+    
     func fetchProof(reportId: String, completion: @escaping (Data?) -> Void) {
         db.collection("reports").document(reportId)
             .collection("proof").document(reportId)
@@ -202,6 +264,7 @@ class ReportController: ObservableObject {
             updates["assignedTechnicianId"]   = ""
             updates["assignedTechnicianName"] = ""
             updates["proof_base64"]           = ""
+            updates["proof_url"]              = ""
             updates["needsAdminReview"]       = true
         }
         db.collection("reports").document(reportId).updateData(updates) { error in
@@ -224,4 +287,3 @@ class ReportController: ObservableObject {
     func reports(assignedTo techId: String)    -> [ReportModel] { reports.filter { $0.assignedTechnicianId == techId } }
     func getReportsByStatus(_ status: String)  -> [ReportModel] { reports.filter { $0.status == status } }
 }
-

@@ -42,6 +42,22 @@ struct VerifyReportView: View {
                         Image(uiImage: proofImg)
                             .resizable().scaledToFit()
                             .cornerRadius(12)
+                    } else if let urlString = report.proofImageUrl, let url = URL(string: urlString) {
+                        AsyncImage(url: url) { phase in
+                            switch phase {
+                            case .empty:
+                                ProgressView()
+                                    .frame(maxWidth: .infinity, minHeight: 180)
+                            case .success(let image):
+                                image.resizable().scaledToFit().cornerRadius(12)
+                            case .failure:
+                                Image(systemName: "photo")
+                                    .foregroundColor(.gray)
+                                    .frame(maxWidth: .infinity, minHeight: 180)
+                            @unknown default:
+                                EmptyView()
+                            }
+                        }
                     } else {
                         HStack {
                             Image(systemName: "photo.slash").foregroundColor(.gray)

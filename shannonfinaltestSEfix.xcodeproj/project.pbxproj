@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BF27EAB32FD076D700BEBD21 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = BF27EAB22FD076D700BEBD21 /* FirebaseStorage */; };
 		BFC91E402FCB3349001B7343 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = BFC91E3F2FCB3349001B7343 /* FirebaseAnalytics */; };
 		BFC91E422FCB3349001B7343 /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = BFC91E412FCB3349001B7343 /* FirebaseAppCheck */; };
 		BFC91E442FCB3349001B7343 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = BFC91E432FCB3349001B7343 /* FirebaseAuth */; };
@@ -74,6 +75,7 @@
 				BFC91E442FCB3349001B7343 /* FirebaseAuth in Frameworks */,
 				BFC91E462FCB3349001B7343 /* FirebaseCore in Frameworks */,
 				BFC91E402FCB3349001B7343 /* FirebaseAnalytics in Frameworks */,
+				BF27EAB32FD076D700BEBD21 /* FirebaseStorage in Frameworks */,
 				BFC91E4B2FCB3649001B7343 /* FirebaseFirestore in Frameworks */,
 				BFC91E4D2FCB3669001B7343 /* FirebaseFirestoreCombine-Community in Frameworks */,
 			);
@@ -158,6 +160,7 @@
 				BFC91E472FCB3349001B7343 /* FirebaseDatabase */,
 				BFC91E4A2FCB3649001B7343 /* FirebaseFirestore */,
 				BFC91E4C2FCB3669001B7343 /* FirebaseFirestoreCombine-Community */,
+				BF27EAB22FD076D700BEBD21 /* FirebaseStorage */,
 			);
 			productName = shannonfinaltestSEfix;
 			productReference = FAE6623A2FC88786000A1A6C /* shannonfinaltestSEfix.app */;
@@ -521,6 +524,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		BF27EAB22FD076D700BEBD21 /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BFC91E3E2FCB3349001B7343 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
 		BFC91E3F2FCB3349001B7343 /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = BFC91E3E2FCB3349001B7343 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
