@@ -147,14 +147,39 @@ class ReportController: ObservableObject {
             }
         }
 
-        db.collection("reports").document(reportId).updateData([
-            "proof_base64": proofBase64,
-            "status":       "Completed"
-        ]) { error in
-            DispatchQueue.main.async {
-                completion(error == nil)
+        let proofDoc = db
+            .collection("reports").document(reportId)
+            .collection("proof").document(reportId)
+
+        proofDoc.setData(["proof_base64": proofBase64]) { [weak self] error in
+            guard error == nil, let self = self else {
+                DispatchQueue.main.async { completion(false) }
+                return
+            }
+            self.db.collection("reports").document(reportId).updateData([
+                "status":       "Completed",
+                "proof_base64": ""  
+            ]) { err in
+                DispatchQueue.main.async { completion(err == nil) }
             }
         }
+    }
+
+    /// Fetches the proof image for a single report from its sub-collection.
+    func fetchProof(reportId: String, completion: @escaping (Data?) -> Void) {
+        db.collection("reports").document(reportId)
+            .collection("proof").document(reportId)
+            .getDocument { snapshot, _ in
+                guard
+                    let b64 = snapshot?.data()?["proof_base64"] as? String,
+                    !b64.isEmpty,
+                    let data = Data(base64Encoded: b64)
+                else {
+                    completion(nil)
+                    return
+                }
+                completion(data)
+            }
     }
 
     func verifyCompletion(

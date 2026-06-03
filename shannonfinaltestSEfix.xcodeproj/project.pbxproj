@@ -16,19 +16,55 @@
 		BFC91E4D2FCB3669001B7343 /* FirebaseFirestoreCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = BFC91E4C2FCB3669001B7343 /* FirebaseFirestoreCombine-Community */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		BFD01E002FCFFB5E00B8C518 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FAE662322FC88786000A1A6C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FAE662392FC88786000A1A6C;
+			remoteInfo = shannonfinaltestSEfix;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		BFD01DFC2FCFFB5E00B8C518 /* shannonfinaltestSEfixTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = shannonfinaltestSEfixTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAE6623A2FC88786000A1A6C /* shannonfinaltestSEfix.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = shannonfinaltestSEfix.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		BFD01DF72FCFFA3700B8C518 /* Exceptions for "shannonfinaltestSEfix" folder in "shannonfinaltestSEfix" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = FAE662392FC88786000A1A6C /* shannonfinaltestSEfix */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		BFD01DFD2FCFFB5E00B8C518 /* shannonfinaltestSEfixTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = shannonfinaltestSEfixTests;
+			sourceTree = "<group>";
+		};
 		FAE6623C2FC88786000A1A6C /* shannonfinaltestSEfix */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				BFD01DF72FCFFA3700B8C518 /* Exceptions for "shannonfinaltestSEfix" folder in "shannonfinaltestSEfix" target */,
+			);
 			path = shannonfinaltestSEfix;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		BFD01DF92FCFFB5E00B8C518 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FAE662372FC88786000A1A6C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -57,6 +93,7 @@
 			isa = PBXGroup;
 			children = (
 				FAE6623C2FC88786000A1A6C /* shannonfinaltestSEfix */,
+				BFD01DFD2FCFFB5E00B8C518 /* shannonfinaltestSEfixTests */,
 				BFC91E492FCB3649001B7343 /* Frameworks */,
 				FAE6623B2FC88786000A1A6C /* Products */,
 			);
@@ -66,6 +103,7 @@
 			isa = PBXGroup;
 			children = (
 				FAE6623A2FC88786000A1A6C /* shannonfinaltestSEfix.app */,
+				BFD01DFC2FCFFB5E00B8C518 /* shannonfinaltestSEfixTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -73,6 +111,29 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		BFD01DFB2FCFFB5E00B8C518 /* shannonfinaltestSEfixTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BFD01E022FCFFB5E00B8C518 /* Build configuration list for PBXNativeTarget "shannonfinaltestSEfixTests" */;
+			buildPhases = (
+				BFD01DF82FCFFB5E00B8C518 /* Sources */,
+				BFD01DF92FCFFB5E00B8C518 /* Frameworks */,
+				BFD01DFA2FCFFB5E00B8C518 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BFD01E012FCFFB5E00B8C518 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				BFD01DFD2FCFFB5E00B8C518 /* shannonfinaltestSEfixTests */,
+			);
+			name = shannonfinaltestSEfixTests;
+			packageProductDependencies = (
+			);
+			productName = shannonfinaltestSEfixTests;
+			productReference = BFD01DFC2FCFFB5E00B8C518 /* shannonfinaltestSEfixTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		FAE662392FC88786000A1A6C /* shannonfinaltestSEfix */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = FAE662452FC88788000A1A6C /* Build configuration list for PBXNativeTarget "shannonfinaltestSEfix" */;
@@ -109,9 +170,17 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 2620;
+				KnownAssetTags = (
+					New,
+					"New-1",
+				);
+				LastSwiftUpdateCheck = 2650;
 				LastUpgradeCheck = 2620;
 				TargetAttributes = {
+					BFD01DFB2FCFFB5E00B8C518 = {
+						CreatedOnToolsVersion = 26.5;
+						TestTargetID = FAE662392FC88786000A1A6C;
+					};
 					FAE662392FC88786000A1A6C = {
 						CreatedOnToolsVersion = 26.2;
 					};
@@ -135,11 +204,19 @@
 			projectRoot = "";
 			targets = (
 				FAE662392FC88786000A1A6C /* shannonfinaltestSEfix */,
+				BFD01DFB2FCFFB5E00B8C518 /* shannonfinaltestSEfixTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		BFD01DFA2FCFFB5E00B8C518 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FAE662382FC88786000A1A6C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -150,6 +227,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		BFD01DF82FCFFB5E00B8C518 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FAE662362FC88786000A1A6C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -159,7 +243,57 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		BFD01E012FCFFB5E00B8C518 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FAE662392FC88786000A1A6C /* shannonfinaltestSEfix */;
+			targetProxy = BFD01E002FCFFB5E00B8C518 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		BFD01E032FCFFB5E00B8C518 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ALP.shannonfinaltestSEfixTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/shannonfinaltestSEfix.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/shannonfinaltestSEfix";
+			};
+			name = Debug;
+		};
+		BFD01E042FCFFB5E00B8C518 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ALP.shannonfinaltestSEfixTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/shannonfinaltestSEfix.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/shannonfinaltestSEfix";
+			};
+			name = Release;
+		};
 		FAE662432FC88788000A1A6C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -288,6 +422,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = shannonfinaltestSEfix/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -319,6 +454,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = shannonfinaltestSEfix/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -344,6 +480,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		BFD01E022FCFFB5E00B8C518 /* Build configuration list for PBXNativeTarget "shannonfinaltestSEfixTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BFD01E032FCFFB5E00B8C518 /* Debug */,
+				BFD01E042FCFFB5E00B8C518 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		FAE662352FC88786000A1A6C /* Build configuration list for PBXProject "shannonfinaltestSEfix" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
