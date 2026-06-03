@@ -1,6 +1,5 @@
 //
 //  ReportController.swift
-//  shannonfinaltestSEfix
 //
 
 import Foundation
@@ -86,8 +85,11 @@ class ReportController: ObservableObject {
         isLoading = true
 
         var imageString = ""
-        if let data = image?.jpegData(compressionQuality: 0.5) {
-            imageString = data.base64EncodedString()
+        if let img = image {
+            let resized = img.resizedToMaxDimension(800)
+            if let data = resized.jpegData(compressionQuality: 0.3) {
+                imageString = data.base64EncodedString()
+            }
         }
 
         let newId = "AQ-\(Int.random(in: 1000...9999))"
@@ -138,8 +140,11 @@ class ReportController: ObservableObject {
         completion: @escaping (Bool) -> Void
     ) {
         var proofBase64 = ""
-        if let data = proofImage?.jpegData(compressionQuality: 0.5) {
-            proofBase64 = data.base64EncodedString()
+        if let image = proofImage {
+            let resized = image.resizedToMaxDimension(800)
+            if let data = resized.jpegData(compressionQuality: 0.3) {
+                proofBase64 = data.base64EncodedString()
+            }
         }
 
         db.collection("reports").document(reportId).updateData([
